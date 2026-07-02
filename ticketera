@@ -1,0 +1,115 @@
+import json
+import random
+import os
+
+ARCHIVO = "tickets.json"
+
+def cargar_tickets():
+    if os.path.exists(ARCHIVO):
+        with open(ARCHIVO, "r") as archivo:
+            return json.load(archivo)
+    return []
+
+
+def guardar_tickets(tickets):
+    with open(ARCHIVO, "w") as archivo:
+        json.dump(tickets, archivo, indent=4)
+
+def alta_ticket():
+    tickets = cargar_tickets()
+
+    while True:
+        numero = random.randint(1000, 9999)
+        existe = True
+        while existe:
+            existe = False
+            for ticket in tickets:
+                if ticket["numero"] == numero:
+                    numero = random.randint(1000, 9999)
+                    existe = True
+        nombre = input("Ingrese su nombre: ")
+        sector = input("Ingrese el sector: ")
+        asunto = input("Ingrese el asunto: ")
+        problema = input("Describa el problema: ")
+
+        ticket = {
+            "numero": numero,
+            "nombre": nombre,
+            "sector": sector,
+            "asunto": asunto,
+            "problema": problema
+        }
+
+        tickets.append(ticket)
+        guardar_tickets(tickets)
+
+        print("=" * 60)
+        print("           Se generó el siguiente Ticket")
+        print("=" * 60)
+        print()
+        print("Su nombre:", nombre, "\tN°Ticket:", numero)
+        print("Sector:", sector)
+        print("Asunto:", asunto)
+        print()
+        print("Mensaje:", problema)
+        print()
+        print("      Recordar su número de Ticket")
+        print()
+        
+        opcion = input("¿Desea generar un nuevo Ticket? (S/N): ")
+
+        if opcion.upper() != "S":
+            break
+
+def leer_ticket():
+    tickets = cargar_tickets()
+
+    while True:
+        numero = int(input("Ingrese el número de ticket: "))
+
+        encontrado = False
+
+        for ticket in tickets:
+            if ticket["numero"] == numero:
+                print("\n----- TICKET -----")
+                print("Número:", ticket["numero"])
+                print("Nombre:", ticket["nombre"])
+                print("Sector:", ticket["sector"])
+                print("Asunto:", ticket["asunto"])
+                print("Problema:", ticket["problema"])
+                encontrado = True
+                break
+
+        if not encontrado:
+            print("No existe ese ticket.")
+
+        opcion = input("\n¿Desea leer otro ticket? (S/N): ")
+
+        if opcion.upper() != "S":
+            break
+
+def menu():
+    while True:
+        print("\n========= MENÚ =========")
+        print("1 - Alta Ticket")
+        print("2 - Leer Ticket")
+        print("3 - Salir")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            alta_ticket()
+
+        elif opcion == "2":
+            leer_ticket()
+
+        elif opcion == "3":
+            confirmar = input("¿Está seguro que desea salir? (S/N): ")
+
+            if confirmar.upper() == "S":
+                print("Programa finalizado.")
+                break
+        else:
+            print("Opción incorrecta.")
+
+menu()
