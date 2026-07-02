@@ -1,0 +1,23 @@
+[
+    {
+        "numero": 4763,
+        "nombre": "Natalin",
+        "sector": "Sistemas",
+        "asunto": "pc no enciende",
+        "problema": "no enciende pc"
+    },
+    {
+        "numero": 1231,
+        "nombre": "Roberto",
+        "sector": "Contable",
+        "asunto": "No anda",
+        "problema": "veni a verme"
+    },
+    {
+        "numero": 8828,
+        "nombre": "Jaula",
+        "sector": "Cobranzas",
+        "asunto": "No hay sistema",
+        "problema": "Me olvidé la contraseña"
+    }
+]
